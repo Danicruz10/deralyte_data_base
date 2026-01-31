@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     // 1. Buscamos si el email ya existe
     const { data: existente } = await supabase
       .from("giveaway")
-      .select("email, expiracion")
+      .select("email, expiration")
       .eq("email", email.toLowerCase())
       .single();
 
@@ -42,26 +42,26 @@ export default async function handler(req, res) {
       // Si ya existe, le devolvemos la fecha de expiración que ya tenía
       return res.status(200).json({
         isDuplicate: true,
-        expirationTime: existente.expiracion,
+        expirationTime: existente.expiration,
         message: "Ya estás registrado",
       });
     }
 
     // 2. Si es nuevo, calculamos 2 horas desde ahora
     const ahora = new Date().getTime();
-    const expiracion = ahora + 2 * 60 * 60 * 1000;
+    const expiration = ahora + 2 * 60 * 60 * 1000;
 
     // 3. Guardamos en la base de datos
     const { error } = await supabase
       .from("giveaway")
-      .insert([{ full_name, email: email.toLowerCase(), expiracion }]);
+      .insert([{ full_name, email: email.toLowerCase(), expiration }]);
 
     if (error) throw error;
 
     // 4. Respondemos éxito
     return res.status(200).json({
       isDuplicate: false,
-      expirationTime: expiracion,
+      expirationTime: expiration,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
