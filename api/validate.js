@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   try {
     // 1. Buscamos si el email ya existe
     const { data: existente } = await supabase
-      .from("registros")
+      .from("giveaway")
       .select("email, expiracion")
       .eq("email", email.toLowerCase())
       .single();
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
 
     // 3. Guardamos en la base de datos
     const { error } = await supabase
-      .from("registros")
+      .from("giveaway")
       .insert([{ full_name, email: email.toLowerCase(), expiracion }]);
 
     if (error) throw error;
