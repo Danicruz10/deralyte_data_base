@@ -36,7 +36,7 @@ export default async function handler(req, res) {
       .from("giveaway")
       .select("email, expiration")
       .eq("email", email.toLowerCase())
-      .single();
+      .maybeSingle();
 
     if (existente) {
       // Si ya existe, le devolvemos la fecha de expiración que ya tenía
