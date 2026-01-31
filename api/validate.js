@@ -42,8 +42,8 @@ export default async function handler(req, res) {
       // Si ya existe, le devolvemos la fecha de expiración que ya tenía
       return res.status(200).json({
         isDuplicate: true,
-        expirationTime: existente.expiration,
-        message: "Ya estás registrado",
+        // expirationTime: existente.expiration,
+        //message: "Ya estás registrado",
       });
     }
 
