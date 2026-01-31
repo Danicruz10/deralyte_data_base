@@ -20,11 +20,15 @@ export default async function handler(req, res) {
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
   );
   // Solo permitimos peticiones POST
-  if (req.method !== "POST" && req.method !== "OPTIONS") {
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
   }
 
-  const { nombre, email } = req.body;
+  const { full_name, email } = req.body;
 
   try {
     // 1. Buscamos si el email ya existe
@@ -50,7 +54,7 @@ export default async function handler(req, res) {
     // 3. Guardamos en la base de datos
     const { error } = await supabase
       .from("registros")
-      .insert([{ nombre, email: email.toLowerCase(), expiracion }]);
+      .insert([{ full_name, email: email.toLowerCase(), expiracion }]);
 
     if (error) throw error;
 
