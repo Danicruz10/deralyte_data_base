@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://wisteria-bulldog-nrwn.squarespace.com",
+    "https://www.deralyte.com/",
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
